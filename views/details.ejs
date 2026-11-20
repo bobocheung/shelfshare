@@ -1,0 +1,45 @@
+<%- include('partials/header') %>
+<section class="page-head">
+  <div>
+    <p class="eyebrow"><%= book.courseCode %> · <%= statusLabel(book.status) %></p>
+    <h1><%= book.title %></h1>
+    <p class="lede"><%= book.author %><% if (book.edition) { %> · <%= book.edition %><% } %></p>
+  </div>
+  <p class="price price-large"><%= money(book.price) %></p>
+</section>
+
+<section class="card detail-card">
+  <dl class="facts">
+    <div>
+      <dt>Condition</dt>
+      <dd><%= book.condition %></dd>
+    </div>
+    <div>
+      <dt>Status</dt>
+      <dd><%= statusLabel(book.status) %></dd>
+    </div>
+    <div>
+      <dt>Seller</dt>
+      <dd><%= book.sellerName %> (<%= book.sellerUsername %>)</dd>
+    </div>
+    <div>
+      <dt>Contact</dt>
+      <dd><%= book.contact %></dd>
+    </div>
+    <div>
+      <dt>Updated</dt>
+      <dd><%= book.updatedAt.toLocaleString('en-HK', { dateStyle: 'medium', timeStyle: 'short' }) %></dd>
+    </div>
+  </dl>
+  <% if (book.description) { %>
+    <p class="description"><%= book.description %></p>
+  <% } %>
+  <div class="row-actions">
+    <a class="btn btn-primary" href="/books/<%= book._id %>/edit">Edit</a>
+    <form action="/books/<%= book._id %>/delete" method="post" onsubmit="return confirm('Delete this listing?');">
+      <button class="btn btn-danger" type="submit">Delete</button>
+    </form>
+    <a class="btn btn-ghost" href="/books">Back to listings</a>
+  </div>
+</section>
+<%- include('partials/footer') %>

@@ -1,0 +1,91 @@
+<%- include('partials/header') %>
+<section class="page-head">
+  <div>
+    <p class="eyebrow">Logged-in board</p>
+    <h1>Textbook listings</h1>
+    <p class="lede">Search by title, author, course, condition, status, or a maximum price.</p>
+  </div>
+  <a class="btn btn-primary" href="/books/new">New listing</a>
+</section>
+
+<ul class="crud-key">
+  <li><span>Create</span> New listing</li>
+  <li><span>Read</span> Search</li>
+  <li><span>Update</span> Edit</li>
+  <li><span>Delete</span> Delete</li>
+</ul>
+
+<form class="card search-card" action="/books" method="get">
+  <div class="search-grid">
+    <label>
+      Title
+      <input name="title" value="<%= query.title %>" placeholder="Software">
+    </label>
+    <label>
+      Author
+      <input name="author" value="<%= query.author %>" placeholder="Sommerville">
+    </label>
+    <label>
+      Course code
+      <input name="courseCode" value="<%= query.courseCode %>" placeholder="COMP3810">
+    </label>
+    <label>
+      Condition
+      <select name="condition">
+        <option value="">Any</option>
+        <% conditions.forEach((item) => { %>
+          <option value="<%= item %>" <%= query.condition === item ? 'selected' : '' %>><%= item %></option>
+        <% }) %>
+      </select>
+    </label>
+    <label>
+      Status
+      <select name="status">
+        <option value="">Any</option>
+        <% statuses.forEach((item) => { %>
+          <option value="<%= item %>" <%= query.status === item ? 'selected' : '' %>><%= statusLabel(item) %></option>
+        <% }) %>
+      </select>
+    </label>
+    <label>
+      Max price (HKD)
+      <input name="maxPrice" inputmode="decimal" value="<%= query.maxPrice %>" placeholder="150">
+    </label>
+  </div>
+  <div class="row-actions">
+    <button class="btn btn-primary" type="submit">Search</button>
+    <a class="btn btn-ghost" href="/books">Clear</a>
+  </div>
+</form>
+
+<p class="result-count"><%= books.length %> listing<%= books.length === 1 ? '' : 's' %></p>
+
+<% if (!books.length) { %>
+  <section class="card empty">
+    <h2>No listings match</h2>
+    <p>Try another course code, or post the copy you want to sell.</p>
+  </section>
+<% } else { %>
+  <div class="book-grid">
+    <% books.forEach((book) => { %>
+      <article class="book-card status-<%= book.status %>">
+        <div class="book-meta">
+          <span class="pill"><%= book.courseCode %></span>
+          <span class="pill pill-status"><%= statusLabel(book.status) %></span>
+        </div>
+        <h2><a href="/books/<%= book._id %>"><%= book.title %></a></h2>
+        <p class="author"><%= book.author %></p>
+        <p class="price"><%= money(book.price) %> <span><%= book.condition %><% if (book.edition) { %> · <%= book.edition %><% } %></span></p>
+        <p class="seller">Seller <%= book.sellerName %></p>
+        <div class="row-actions">
+          <a class="btn btn-ghost" href="/books/<%= book._id %>">View</a>
+          <a class="btn btn-ghost" href="/books/<%= book._id %>/edit">Edit</a>
+          <form action="/books/<%= book._id %>/delete" method="post" onsubmit="return confirm('Delete this listing?');">
+            <button class="btn btn-danger" type="submit">Delete</button>
+          </form>
+        </div>
+      </article>
+    <% }) %>
+  </div>
+<% } %>
+<%- include('partials/footer') %>

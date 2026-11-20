@@ -1,0 +1,24 @@
+{
+  "name": "comp3810sef-shelfshare",
+  "version": "1.0.0",
+  "description": "ShelfShare — campus textbook exchange for COMP 3810SEF. Express.js, EJS, Mongoose, cookie-session.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "start:memory": "node server.js --memory"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cookie-session": "^2.1.1",
+    "dotenv": "^16.4.7",
+    "ejs": "^3.1.10",
+    "express": "^4.21.2",
+    "mongoose": "^8.9.5"
+  },
+  "devDependencies": {
+    "mongodb-memory-server": "^10.1.4"
+  }
+}

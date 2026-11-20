@@ -1,0 +1,35 @@
+<%- include('partials/header') %>
+<section class="auth-layout">
+  <div class="auth-copy">
+    <p class="eyebrow">HKMU campus exchange</p>
+    <h1>Pass a textbook on before it gathers dust.</h1>
+    <p class="lede">ShelfShare is a noticeboard for second-hand course books. Log in to search listings, post a copy, change the price, or take a sold book off the board.</p>
+  </div>
+  <div class="card auth-card">
+    <h2>Log in</h2>
+    <% if (loggedOut) { %>
+      <p class="flash flash-ok">You have logged out.</p>
+    <% } %>
+    <form action="/login" method="post" class="stack">
+      <label>
+        Username
+        <input name="username" autocomplete="username" required value="<%= username %>">
+      </label>
+      <label>
+        Password
+        <input name="password" type="password" autocomplete="current-password" required>
+      </label>
+      <button class="btn btn-primary" type="submit">Log in</button>
+    </form>
+    <p class="fine">New here? <a href="/register">Create an account</a></p>
+    <div class="demo-box">
+      <p>Sample accounts</p>
+      <ul>
+        <li><code>alice</code> / <code>alice123</code></li>
+        <li><code>bob</code> / <code>bob123</code></li>
+        <li><code>admin</code> / <code>admin123</code></li>
+      </ul>
+    </div>
+  </div>
+</section>
+<%- include('partials/footer') %>

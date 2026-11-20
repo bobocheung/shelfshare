@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title><%= title %> · ShelfShare</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,560;9..144,680&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="<%= currentUser ? '/books' : '/login' %>">
+      <span class="brand-mark" aria-hidden="true">Ss</span>
+      <span class="brand-text">
+        <strong>ShelfShare</strong>
+        <small>Campus textbooks</small>
+      </span>
+    </a>
+    <% if (currentUser) { %>
+      <nav class="nav">
+        <a href="/books">Browse</a>
+        <a class="nav-cta" href="/books/new">New listing</a>
+        <span class="who"><%= currentUser.displayName %></span>
+        <form action="/logout" method="post">
+          <button class="btn btn-ghost" type="submit">Log out</button>
+        </form>
+      </nav>
+    <% } %>
+  </header>
+  <main class="wrap">
+    <% if (flash) { %>
+      <p class="flash flash-<%= flash.type %>" role="status"><%= flash.message %></p>
+    <% } %>

@@ -1,0 +1,43 @@
+<%- include('partials/header') %>
+<section class="auth-layout">
+  <div class="auth-copy">
+    <p class="eyebrow">Join the board</p>
+    <h1>Create a student account.</h1>
+    <p class="lede">Your display name is shown on every textbook you post. The password is stored as a hash.</p>
+  </div>
+  <div class="card auth-card">
+    <h2>Register</h2>
+    <% if (errors.length) { %>
+      <ul class="error-list">
+        <% errors.forEach((item) => { %>
+          <li><%= item %></li>
+        <% }) %>
+      </ul>
+    <% } %>
+    <form action="/register" method="post" class="stack">
+      <label>
+        Username
+        <input name="username" autocomplete="username" required minlength="3" maxlength="20" value="<%= form.username %>">
+      </label>
+      <label>
+        Password
+        <input name="password" type="password" autocomplete="new-password" required minlength="6">
+      </label>
+      <label>
+        Display name
+        <input name="displayName" required maxlength="40" value="<%= form.displayName %>">
+      </label>
+      <label>
+        Email
+        <input name="email" type="email" required maxlength="80" value="<%= form.email %>">
+      </label>
+      <label>
+        Programme
+        <input name="programme" maxlength="60" value="<%= form.programme %>" placeholder="BSc Computing">
+      </label>
+      <button class="btn btn-primary" type="submit">Create account</button>
+    </form>
+    <p class="fine">Already registered? <a href="/login">Log in</a></p>
+  </div>
+</section>
+<%- include('partials/footer') %>

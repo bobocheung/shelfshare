@@ -1,0 +1,70 @@
+<%- include('partials/header') %>
+<section class="page-head">
+  <div>
+    <p class="eyebrow"><%= mode === 'create' ? 'Create' : 'Update' %></p>
+    <h1><%= mode === 'create' ? 'New listing' : 'Edit listing' %></h1>
+  </div>
+</section>
+
+<section class="card form-card">
+  <% if (errors.length) { %>
+    <ul class="error-list">
+      <% errors.forEach((item) => { %>
+        <li><%= item %></li>
+      <% }) %>
+    </ul>
+  <% } %>
+  <form action="<%= mode === 'create' ? '/books' : '/books/' + book._id %>" method="post" class="stack">
+    <div class="form-grid">
+      <label>
+        Title
+        <input name="title" required maxlength="120" value="<%= book.title %>">
+      </label>
+      <label>
+        Author
+        <input name="author" required maxlength="80" value="<%= book.author %>">
+      </label>
+      <label>
+        Course code
+        <input name="courseCode" required maxlength="20" value="<%= book.courseCode %>" placeholder="COMP3810">
+      </label>
+      <label>
+        Edition
+        <input name="edition" maxlength="40" value="<%= book.edition %>">
+      </label>
+      <label>
+        Condition
+        <select name="condition">
+          <% conditions.forEach((item) => { %>
+            <option value="<%= item %>" <%= book.condition === item ? 'selected' : '' %>><%= item %></option>
+          <% }) %>
+        </select>
+      </label>
+      <label>
+        Price (HKD)
+        <input name="price" required inputmode="decimal" min="0" step="0.01" value="<%= book.price %>">
+      </label>
+      <label>
+        Status
+        <select name="status">
+          <% statuses.forEach((item) => { %>
+            <option value="<%= item %>" <%= book.status === item ? 'selected' : '' %>><%= statusLabel(item) %></option>
+          <% }) %>
+        </select>
+      </label>
+      <label>
+        Contact
+        <input name="contact" required minlength="4" maxlength="80" value="<%= book.contact %>">
+      </label>
+    </div>
+    <label>
+      Description
+      <textarea name="description" maxlength="1000" rows="4"><%= book.description %></textarea>
+    </label>
+    <div class="row-actions">
+      <button class="btn btn-primary" type="submit"><%= mode === 'create' ? 'Create listing' : 'Save changes' %></button>
+      <a class="btn btn-ghost" href="<%= mode === 'create' ? '/books' : '/books/' + book._id %>">Cancel</a>
+    </div>
+  </form>
+</section>
+<%- include('partials/footer') %>
